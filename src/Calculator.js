@@ -26,26 +26,49 @@ class Calculator extends React.Component
     addChar(char)
     {
         let state = this.getCalcState();
+        let text = state.text;
         let regExpN = /[0-9.]/;
         let regExpO = /[+*/^]|-/;
 
         if(char.match(regExpN))
         {
-            if(state.text.length == 1 && state.text.charAt(0) == '0')
-                state.text = char;
+            if(text.length == 1 && text.charAt(0) == '0' && char != '.')
+                text = char;
             else
-                state.text += char;
+            {
+                if(char != '.')
+                    text += char;
+                    
+                if(char == '.' && text.charAt(text.length -1) != '.')
+                    text += char;
+            }
         }
         else if(char.match(regExpO))
         {
-            if(state.text.charAt(state.text.length -1) == '.')
-                state.text = state.text.slice(0, -1);
+            console.log(text);
+            console.log(text.charAt(text.length -1));
+            
+            if(text.charAt(text.length -1).match(/[+*/^\.]|-/) || 
+              (text.charAt(text.length -1) == ' ' && text.charAt(text.length -2).match(/[+*/^\.]|-/)))
+            {
+                console.log('Match: ', text);
+                if(text.charAt(text.length -1) == ' ')
+                text = text.slice(0, -1);
+                
+                text = text.slice(0, -1);
 
-            state.text += ` ${char} `;
+                if(text.charAt(text.length -1) == ' ')
+                    text = text.slice(0, -1);
+            }
+            console.log('');
+
+            text += ` ${char} `;
         }
 
         if(char == '√')
-            state.text += ` ^ 0.5`;
+            text += ` ^ 0.5`;
+
+        state.text = text;
         this.setCalcState(state);
     }
 
@@ -68,7 +91,7 @@ class Calculator extends React.Component
                 numbers.push(Number(rawText[i]));
             }
             
-            if(rawText[i].match(regExpO))
+            if(rawText[i].match(regExpO) && !rawText[i].match(regExpN))
             {
                 operators.push(rawText[i]);
             }
@@ -97,16 +120,16 @@ class Calculator extends React.Component
         {
             if(operators[i] == '^')
             {
-                if(numbers[i] != 0 && numbers[i +1] != 0)
+                if(numbers[i] == 0 && numbers[i +1] == 0)
+                {
+                    return 'Zero to the power of Zero is undefined';
+                }
+                else
                 {
                     numbers[i] = Math.pow(numbers[i], numbers[i +1]);
                     operators.splice(i, 1);
                     numbers.splice(i +1, 1);
                     i--;
-                }
-                else
-                {
-                    return 'Zero to the power of Zero is undefined';
                 }
             }
 
@@ -224,11 +247,20 @@ class Calculator extends React.Component
     {
         let text = this.getCalcState().text;
 
-        if(text.charAt(text.length -1) == ' ')
+        if(text.charAt(text.length -2).match(/[+*/^]|-/))
+        {
+            if(text.charAt(text.length -1) == ' ')
+                text = text.slice(0, -1);
+
             text = text.slice(0, -1);
-        text = text.slice(0, -1);
-        if(text.charAt(text.length -1) == ' ')
+
+            if(text.charAt(text.length -1) == ' ')
+                text = text.slice(0, -1);
+        }
+        else
+        {
             text = text.slice(0, -1);
+        }
 
         this.changeText(text);
     }
