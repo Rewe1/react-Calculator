@@ -45,24 +45,28 @@ class Calculator extends React.Component
         }
         else if(char.match(regExpO))
         {
-            console.log(text);
-            console.log(text.charAt(text.length -1));
-            
             if(text.charAt(text.length -1).match(/[+*/^\.]|-/) || 
               (text.charAt(text.length -1) == ' ' && text.charAt(text.length -2).match(/[+*/^\.]|-/)))
             {
-                console.log('Match: ', text);
-                if(text.charAt(text.length -1) == ' ')
-                text = text.slice(0, -1);
-                
-                text = text.slice(0, -1);
-
-                if(text.charAt(text.length -1) == ' ')
+                if(char == '-' && text.charAt(text.length -2).match(/[*/]/))
+                {
+                    text += ` ${char}`;
+                }
+                else
+                {
+                    if(text.charAt(text.length -1) == ' ')
+                        text = text.slice(0, -1);
+                    
                     text = text.slice(0, -1);
-            }
-            console.log('');
 
-            text += ` ${char} `;
+                    if(text.charAt(text.length -1) == ' ')
+                        text = text.slice(0, -1);
+
+                    text += ` ${char} `;
+                }
+            }
+            else
+                text += ` ${char} `;
         }
 
         if(char == '√')
