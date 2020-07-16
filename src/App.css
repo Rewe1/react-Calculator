@@ -66,6 +66,9 @@ body
 
 .Key
 {
+    position: relative;
+    bottom: 2px;
+    right: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -78,10 +81,22 @@ body
     font-size: 24px;
     font-weight: bolder;
     color: #ccc;
-    border-radius: 3px;
     box-shadow: 2px 2px #333;
+    border-radius: 3px;
     user-select: none;
     cursor: pointer;
+}
+
+.Key:active
+{
+    bottom: 0;
+    right: 0;
+    box-shadow: 0 0;
+}
+
+.Key:hover
+{
+    filter: brightness(1.2);
 }
 
 .Key .Horizontal
