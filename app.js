@@ -15,8 +15,7 @@ app.get('/', (req, res) =>
             console.log(`${__dirname}: ${err}`)
             res.status(500).end();
         }
-        res.status(200);
-        res.end(data);
+        res.status(200).end(data);
     })
 });
 
@@ -29,8 +28,7 @@ app.get('/index.js', (req, res) =>
             console.log(`${__dirname}: ${err}`)
             res.status(500).end();
         }
-        res.status(200);
-        res.end(data);
+        res.status(200).end(data);
     })
 });
 
@@ -43,8 +41,7 @@ app.get('/App.js', (req, res) =>
             console.log(`${__dirname}: ${err}`)
             res.status(500).end();
         }
-        res.status(200);
-        res.end(data);
+        res.status(200).end(data);
     })
 });
 
@@ -57,8 +54,7 @@ app.get('/App.css', (req, res) =>
             console.log(`${__dirname}: ${err}`)
             res.status(500).end();
         }
-        res.status(200);
-        res.end(data);
+        res.type('.css').status(200).end(data);
     })
 });
 
@@ -71,8 +67,7 @@ app.get('/Calculator.js', (req, res) =>
             console.log(`${__dirname}: ${err}`)
             res.status(500).end();
         }
-        res.status(200);
-        res.end(data);
+        res.status(200).end(data);
     })
 });
 
