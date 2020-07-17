@@ -269,14 +269,27 @@ class Calculator extends React.Component
         this.changeText(text);
     }
 
+    onKeyDown(e)
+    {
+        if(e.key == 'Enter')
+            this.calculate();
+        else if(e.key == 'Backspace')
+            this.backspace();
+        else if(e.key == 'ArrowUp' || e.key == 'Dead' )
+            this.addChar('^');
+        else
+            this.addChar(e.key);
+        console.log(e.key);
+    }
+
     render()
     {
         return (
-            <div id='Carcass'>
-
+            <div id='Carcass' tabIndex='0' onKeyDown={(e) => this.onKeyDown(e)}>
                 <div className='Holder'>
                     <div id='Display'>
                         <span id='LED'>{this.state.text}</span>
+                        <input id='inputHandler' tabIndex='0' autoFocus></input>
                         <span id='LowerLED'>{`${this.getResult()}`}</span>
                     </div>
                 </div>
