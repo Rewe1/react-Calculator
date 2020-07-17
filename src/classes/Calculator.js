@@ -1,3 +1,6 @@
+const React = require('react');
+const Key = require('./Key.js');
+
 class Calculator extends React.Component
 {
     constructor(props)
@@ -29,63 +32,6 @@ class Calculator extends React.Component
         if(state.text == '')
             state.text = '0';
         this.setState(state);
-    }
-
-    addChar(char)
-    {
-        let state = this.getCalcState();
-        let text = state.text;
-
-        if(text.length >= 15)
-            return;
-
-        let regExpN = /[0-9.]/;
-        let regExpO = /[+*/^]|-/;
-
-        if(char.match(regExpN))
-        {
-            if(text.length == 1 && text.charAt(0) == '0' && char != '.')
-                text = char;
-            else
-            {
-                if(char != '.')
-                    text += char;
-                    
-                if(char == '.' && text.charAt(text.length -1) != '.')
-                    text += char;
-            }
-        }
-        else if(char.match(regExpO))
-        {
-            if(text.charAt(text.length -1).match(/[+*/^\.]|-/) || 
-              (text.charAt(text.length -1) == ' ' && text.charAt(text.length -2).match(/[+*/^\.]|-/)))
-            {
-                if(char == '-' && text.charAt(text.length -2).match(/[*/]/))
-                {
-                    text += ` ${char}`;
-                }
-                else
-                {
-                    if(text.charAt(text.length -1) == ' ')
-                        text = text.slice(0, -1);
-                    
-                    text = text.slice(0, -1);
-
-                    if(text.charAt(text.length -1) == ' ')
-                        text = text.slice(0, -1);
-
-                    text += ` ${char} `;
-                }
-            }
-            else
-                text += ` ${char} `;
-        }
-
-        if(char == '√')
-            text += ` ^ 0.5`;
-
-        state.text = text;
-        this.setCalcState(state);
     }
 
     parseString()
@@ -246,6 +192,63 @@ class Calculator extends React.Component
             this.changeText(String(result));
     }
 
+    addChar(char)
+    {
+        let state = this.getCalcState();
+        let text = state.text;
+
+        if(text.length >= 15)
+            return;
+
+        let regExpN = /[0-9.]/;
+        let regExpO = /[+*/^]|-/;
+
+        if(char.match(regExpN))
+        {
+            if(text.length == 1 && text.charAt(0) == '0' && char != '.')
+                text = char;
+            else
+            {
+                if(char != '.')
+                    text += char;
+                    
+                if(char == '.' && text.charAt(text.length -1) != '.')
+                    text += char;
+            }
+        }
+        else if(char.match(regExpO))
+        {
+            if(text.charAt(text.length -1).match(/[+*/^\.]|-/) || 
+              (text.charAt(text.length -1) == ' ' && text.charAt(text.length -2).match(/[+*/^\.]|-/)))
+            {
+                if(char == '-' && text.charAt(text.length -2).match(/[*/]/))
+                {
+                    text += ` ${char}`;
+                }
+                else
+                {
+                    if(text.charAt(text.length -1) == ' ')
+                        text = text.slice(0, -1);
+                    
+                    text = text.slice(0, -1);
+
+                    if(text.charAt(text.length -1) == ' ')
+                        text = text.slice(0, -1);
+
+                    text += ` ${char} `;
+                }
+            }
+            else
+                text += ` ${char} `;
+        }
+
+        if(char == '√')
+            text += ` ^ 0.5`;
+
+        state.text = text;
+        this.setCalcState(state);
+    }
+
     changeText(string)
     {
         let state = this.getCalcState();
@@ -376,32 +379,5 @@ class Calculator extends React.Component
         );
     }
 };
-
-class Key extends React.Component
-{
-    constructor(props)
-    {
-        super(props);
-
-        this.onClick = this.props.onClick;
-        this.onTouchStart = this.props.onTouchStart;
-    }
-
-    render()
-    {
-        return (
-            <div className='Key' onTouchStart={() => this.onTouchStart()} onClick={() => this.onClick()}>
-                {
-                    this.props.isHor == true &&
-                        <span className='Horizontal'>{this.props.text}</span>
-                }
-                {
-                    this.props.isHor == false || this.props.isHor == null &&
-                        this.props.text
-                }
-            </div>
-        )
-    }
-}
 
 module.exports = Calculator;

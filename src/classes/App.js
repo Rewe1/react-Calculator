@@ -1,3 +1,5 @@
+const React = require('react');
+
 const Calculator = require('./Calculator.js');
 
 class App extends React.Component

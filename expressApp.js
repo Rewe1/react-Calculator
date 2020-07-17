@@ -19,32 +19,6 @@ app.get('/', (req, res) =>
     })
 });
 
-app.get('/index.js', (req, res) =>
-{
-    fs.readFile(`${__dirname}/lib/index.js`, (err, data) =>
-    {
-        if(err)
-        {
-            console.log(`${__dirname}: ${err}`)
-            res.status(500).end();
-        }
-        res.status(200).end(data);
-    })
-});
-
-app.get('/App.js', (req, res) =>
-{
-    fs.readFile(`${__dirname}/lib/App.js`, (err, data) =>
-    {
-        if(err)
-        {
-            console.log(`${__dirname}: ${err}`)
-            res.status(500).end();
-        }
-        res.status(200).end(data);
-    })
-});
-
 app.get('/App.css', (req, res) =>
 {
     fs.readFile(`${__dirname}/src/App.css`, (err, data) =>
@@ -58,18 +32,18 @@ app.get('/App.css', (req, res) =>
     })
 });
 
-app.get('/Calculator.js', (req, res) =>
+app.get('/bundle.js', (req, res) =>
 {
-    fs.readFile(`${__dirname}/lib/Calculator.js`, (err, data) =>
+    fs.readFile(`${__dirname}/build/bundle.js`, (err, data) =>
     {
         if(err)
         {
             console.log(`${__dirname}: ${err}`)
             res.status(500).end();
         }
-        res.status(200).end(data);
+        res.type('.css').status(200).end(data);
     })
-});
+})
 
 app.listen(port, host, () =>
 {

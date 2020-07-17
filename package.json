@@ -1,7 +1,7 @@
 {
     "scripts": {
-        "start": "nodemon app.js -e js,html,css,json",
-        "build": "babel src -d lib && browserify lib/index.js -o lib/bundle.js"
+        "start": "npm run build && nodemon expressApp.js -e js,html,css,json",
+        "build": "babel src -d lib && browserify lib/index.js -o build/bundle.js"
     },
     "dependencies": {
         "express": "^4.17.1",
