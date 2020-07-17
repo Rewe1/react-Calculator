@@ -1,4 +1,4 @@
-import Calculator from 'Calculator';
+const Calculator = require('./Calculator.js');
 
 class App extends React.Component
 {
@@ -19,4 +19,4 @@ class App extends React.Component
     }
 }
 
-export default App;
+module.exports = App;

@@ -1,4 +1,4 @@
-import App from 'App.js';
+const App = require('./App.js');
 
 ReactDOM.render(
   React.createElement(App, null),

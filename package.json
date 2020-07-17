@@ -1,7 +1,7 @@
 {
     "scripts": {
         "start": "nodemon app.js -e js,html,css,json",
-        "build": "babel src -d lib"
+        "build": "babel src -d lib && browserify lib/index.js -o lib/bundle.js"
     },
     "dependencies": {
         "express": "^4.17.1",

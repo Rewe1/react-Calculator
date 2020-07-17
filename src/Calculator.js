@@ -404,4 +404,4 @@ class Key extends React.Component
     }
 }
 
-export default Calculator;
+module.exports = Calculator;
