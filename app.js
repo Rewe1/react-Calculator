@@ -22,7 +22,7 @@ app.get('/', (req, res) =>
 
 app.get('/index.js', (req, res) =>
 {
-    fs.readFile(`${__dirname}/src/index.js`, (err, data) =>
+    fs.readFile(`${__dirname}/lib/index.js`, (err, data) =>
     {
         if(err)
         {
@@ -36,7 +36,7 @@ app.get('/index.js', (req, res) =>
 
 app.get('/App.js', (req, res) =>
 {
-    fs.readFile(`${__dirname}/src/App.js`, (err, data) =>
+    fs.readFile(`${__dirname}/lib/App.js`, (err, data) =>
     {
         if(err)
         {
@@ -64,7 +64,7 @@ app.get('/App.css', (req, res) =>
 
 app.get('/Calculator.js', (req, res) =>
 {
-    fs.readFile(`${__dirname}/src/Calculator.js`, (err, data) =>
+    fs.readFile(`${__dirname}/lib/Calculator.js`, (err, data) =>
     {
         if(err)
         {

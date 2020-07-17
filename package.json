@@ -1,6 +1,7 @@
 {
     "scripts": {
-        "start": "nodemon app.js -e js,html,css,json"
+        "start": "nodemon app.js -e js,html,css,json",
+        "build": "babel src -d lib"
     },
     "dependencies": {
         "express": "^4.17.1",
@@ -9,5 +10,9 @@
         "react-dom": "^16.13.1",
         "styled-components": "^5.1.1"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "@babel/cli": "^7.10.5",
+        "@babel/core": "^7.10.5",
+        "@babel/preset-react": "^7.10.4"
+    }
 }
