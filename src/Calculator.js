@@ -7,10 +7,17 @@ class Calculator extends React.Component
         this.state =
         {
             'text': '0',
-            'mobile': false,
         }
+        this.mobile = false,
+        this.isDebug = false;
     }
     
+    debugLog(func)
+    {
+        if(this.isDebug)
+            func();
+    }
+
     getCalcState()
     {
         let state = this.state;
@@ -88,8 +95,8 @@ class Calculator extends React.Component
         let operators = [];
         let regExpN = /[0-9.]/;
         let regExpO = /[+*/^]|-/;
-        console.log('parseString');
-        console.log('rawText: ', rawText);
+        this.debugLog(() => console.log('parseString'));
+        this.debugLog(() => console.log('rawText: ', rawText));
 
         rawText = rawText.split(' ');
         
@@ -105,25 +112,25 @@ class Calculator extends React.Component
                 operators.push(rawText[i]);
             }
         }
-        console.log('rawText2', rawText);
+        this.debugLog(() => console.log('rawText2', rawText));
         
-        console.log('numbers: ',numbers);
-        console.log('operators: ',operators);
-        console.log('');
+        this.debugLog(() => console.log('numbers: ',numbers));
+        this.debugLog(() => console.log('operators: ',operators));
+        this.debugLog(() => console.log(''));
 
         return {numbers: numbers, operators: operators}
     }
 
     getResult()
     {
-        console.log('calculate');
+        this.debugLog(() => console.log('calculate'));
         let result;
         let parsedStr = this.parseString()
         let numbers = parsedStr.numbers;
         let operators = parsedStr.operators;
 
-        console.log('numbers2: ', numbers);
-        console.log('operators2: ', operators);
+        this.debugLog(() => console.log('numbers2: ', numbers));
+        this.debugLog(() => console.log('operators2: ', operators));
 
         for(let i = 0; i < operators.length; i++)
         {
@@ -175,8 +182,8 @@ class Calculator extends React.Component
         for(let i = 0; i < operators.length; i++)
         {
             
-            console.log('numbers3: ', numbers);
-            console.log('operators3: ', operators);
+            this.debugLog(() => console.log('numbers3: ', numbers));
+            this.debugLog(() => console.log('operators3: ', operators));
             if(operators[i] == '+')
             {
                 numbers[i] = numbers[i] + numbers[i +1];
@@ -185,8 +192,8 @@ class Calculator extends React.Component
                 i--;
             }
             
-            console.log('numbers4: ', numbers);
-            console.log('operators4: ', operators);
+            this.debugLog(() => console.log('numbers4: ', numbers));
+            this.debugLog(() => console.log('operators4: ', operators));
 
             if(operators[i] == '-')
             {
@@ -202,14 +209,14 @@ class Calculator extends React.Component
             if((numbers[0] || numbers[0] == 0) && typeof(numbers[0] == 'number'))
             {
                 result = numbers[0];
-                console.log('result: ', result);
-                console.log('');
+                this.debugLog(() => console.log('result: ', result));
+                this.debugLog(() => console.log(''));
                 return result;
             }
             else
             {
                 if(numbers[0] == undefined)
-                    console.log('Result is ', numbers[0]);
+                    this.debugLog(() => console.log('Result is ', numbers[0]));
 
                 return 'Error';
             }
@@ -217,13 +224,13 @@ class Calculator extends React.Component
         else
         {
             if(!numbers.length)
-                console.log('There are no numbers left');
+                this.debugLog(() => console.log('There are no numbers left'));
 
             if(numbers.length > 1)
-                console.log('There is more than one number left');
+                this.debugLog(() => console.log('There is more than one number left'));
 
             if(operators.length)
-                console.log('There still are operators left');
+                this.debugLog(() => console.log('There still are operators left'));
 
             return 'Error';
         }
@@ -284,36 +291,32 @@ class Calculator extends React.Component
             this.addChar('^');
         else
             this.addChar(e.key);
-        console.log(e.key);
+        this.debugLog(() => console.log(e.key));
     }
 
     onTouchStart(func)
     {
-        if(!this.getCalcState().mobile)
-        {
-            let state = this.getCalcState();
-            state.mobile = true;
-            this.setCalcState(state);
-        }
+        if(!this.isMobile)
+            this.isMobile = true;
 
         if(typeof(func) == 'function')
             func();
         else
-            console.log('func is not a function!');
+            this.debugLog(() => console.log('func is not a function!'));
     }
 
     onClick(func)
     {
-        if(this.getCalcState().mobile)
+        if(this.isMobile)
             return;
 
         if(typeof(func) == 'function')
         {
-            console.log('Calling func');
+            this.debugLog(() => console.log('Calling func'));
             func();
         }
         else
-            console.log('func is not a function!');
+            this.debugLog(() => console.log('func is not a function!'));
     }
 
     render()
