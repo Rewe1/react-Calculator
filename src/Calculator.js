@@ -27,6 +27,10 @@ class Calculator extends React.Component
     {
         let state = this.getCalcState();
         let text = state.text;
+
+        if(text.length >= 15)
+            return;
+
         let regExpN = /[0-9.]/;
         let regExpO = /[+*/^]|-/;
 
