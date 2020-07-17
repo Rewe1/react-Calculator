@@ -7,6 +7,7 @@ class Calculator extends React.Component
         this.state =
         {
             'text': '0',
+            'mobile': false,
         }
     }
     
@@ -286,6 +287,35 @@ class Calculator extends React.Component
         console.log(e.key);
     }
 
+    onTouchStart(func)
+    {
+        if(!this.getCalcState().mobile)
+        {
+            let state = this.getCalcState();
+            state.mobile = true;
+            this.setCalcState(state);
+        }
+
+        if(typeof(func) == 'function')
+            func();
+        else
+            console.log('func is not a function!');
+    }
+
+    onClick(func)
+    {
+        if(this.getCalcState().mobile)
+            return;
+
+        if(typeof(func) == 'function')
+        {
+            console.log('Calling func');
+            func();
+        }
+        else
+            console.log('func is not a function!');
+    }
+
     render()
     {
         return (
@@ -299,44 +329,44 @@ class Calculator extends React.Component
                 </div>
 
                 <div className='Holder'>
-                    <Key text={'C'}  onClick={ () => this.clearText()}></Key>
-                    <Key text={'^x'}  onClick={ () => this.addChar('^')}></Key>
-                    <Key text={'²√'}  onClick={ () => this.addChar('√')}></Key>
-                    <Key text={'←'}  onClick={ () => this.backspace()}></Key>
+                    <Key text={'C'}  onClick={() => this.onClick(() => this.clearText())}  onTouchStart={() => this.onTouchStart(() => this.clearText())}></Key>
+                    <Key text={'^x'} onClick={() => this.onClick(() => this.addChar('^'))} onTouchStart={() => this.onTouchStart(() => this.addChar('^'))}></Key>
+                    <Key text={'²√'} onClick={() => this.onClick(() => this.addChar('√'))} onTouchStart={() => this.onTouchStart(() => this.addChar('√'))}></Key>
+                    <Key text={'←'}  onClick={() => this.onClick(() => this.backspace())}  onTouchStart={() => this.onTouchStart(() => this.backspace())}></Key>
                 </div>
 
                 <div className='Holder'>
-                    <Key text={'+'}  onClick={ () => this.addChar('+')}></Key>
-                    <Key text={'-'}  onClick={ () => this.addChar('-')}></Key>
-                    <Key text={'/'}  onClick={ () => this.addChar('/')}></Key>
-                    <Key text={'*'}  onClick={ () => this.addChar('*')}></Key>
+                    <Key text={'+'} onClick={() => this.onClick(() => this.addChar('+'))} onTouchStart={() => this.onTouchStart(() => this.addChar('+'))}></Key>
+                    <Key text={'-'} onClick={() => this.onClick(() => this.addChar('-'))} onTouchStart={() => this.onTouchStart(() => this.addChar('-'))}></Key>
+                    <Key text={'*'} onClick={() => this.onClick(() => this.addChar('*'))} onTouchStart={() => this.onTouchStart(() => this.addChar('*'))}></Key>
+                    <Key text={'/'} onClick={() => this.onClick(() => this.addChar('/'))} onTouchStart={() => this.onTouchStart(() => this.addChar('/'))}></Key>
                 </div>
 
                 <div className='Holder'>
-                    <Key text={'7'}  onClick={ () => this.addChar('7')}></Key>
-                    <Key text={'8'}  onClick={ () => this.addChar('8')}></Key>
-                    <Key text={'9'}  onClick={ () => this.addChar('9')}></Key>
-                    <Key text={''}  onClick={ () => {}}></Key>
+                    <Key text={'7'} onClick={() => this.onClick(() => this.addChar('7'))} onTouchStart={() => this.onTouchStart(() => this.addChar('7'))}></Key>
+                    <Key text={'8'} onClick={() => this.onClick(() => this.addChar('8'))} onTouchStart={() => this.onTouchStart(() => this.addChar('8'))}></Key>
+                    <Key text={'9'} onClick={() => this.onClick(() => this.addChar('9'))} onTouchStart={() => this.onTouchStart(() => this.addChar('9'))}></Key>
+                    <Key text={''}  onClick={() => {}} onTouchStart={() => {}}></Key>
                 </div>
 
                 <div className='Holder'>
-                    <Key text={'4'}  onClick={ () => this.addChar('4')}></Key>
-                    <Key text={'5'}  onClick={ () => this.addChar('5')}></Key>
-                    <Key text={'6'}  onClick={ () => this.addChar('6')}></Key>
-                    <Key text={''}  onClick={ () => {}}></Key>
+                    <Key text={'4'}  onClick={() => this.onClick(() => this.addChar('4'))} onTouchStart={() => this.onTouchStart(() => this.addChar('4'))}></Key>
+                    <Key text={'5'}  onClick={() => this.onClick(() => this.addChar('5'))} onTouchStart={() => this.onTouchStart(() => this.addChar('5'))}></Key>
+                    <Key text={'6'}  onClick={() => this.onClick(() => this.addChar('6'))} onTouchStart={() => this.onTouchStart(() => this.addChar('6'))}></Key>
+                    <Key text={''}   onClick={() => {}} onTouchStart={() => {}}></Key>
                 </div>
 
                 <div className='Holder'>
-                    <Key text={'1'}  onClick={ () => this.addChar('1')}></Key>
-                    <Key text={'2'}  onClick={ () => this.addChar('2')}></Key>
-                    <Key text={'3'}  onClick={ () => this.addChar('3')}></Key>
-                    <Key text={''}  onClick={ () => {}}></Key>
+                    <Key text={'1'}  onClick={() => this.onClick(() => this.addChar('1'))} onTouchStart={() => this.onTouchStart(() => this.addChar('1'))}></Key>
+                    <Key text={'2'}  onClick={() => this.onClick(() => this.addChar('2'))} onTouchStart={() => this.onTouchStart(() => this.addChar('2'))}></Key>
+                    <Key text={'3'}  onClick={() => this.onClick(() => this.addChar('3'))} onTouchStart={() => this.onTouchStart(() => this.addChar('3'))}></Key>
+                    <Key text={''}   onClick={() => {}} onTouchStart={() => {}}></Key>
                 </div>
 
                 <div className='Holder'>
-                    <Key text={'.'}  onClick={ () => this.addChar('.')}></Key>
-                    <Key text={'0'}  onClick={ () => this.addChar('0')}></Key>
-                    <Key text={'='} isHor={true} onClick={ () => this.calculate()}></Key>
+                    <Key text={'.'}                 onClick={() => this.onClick(() => this.addChar('.'))} onTouchStart={() => this.onTouchStart(() => this.addChar('.'))}></Key>
+                    <Key text={'0'}                 onClick={() => this.onClick(() => this.addChar('0'))} onTouchStart={() => this.onTouchStart(() => this.addChar('0'))}></Key>
+                    <Key text={'='} isHor={true}    onClick={() => this.onClick(() => this.calculate())} onTouchStart={() => this.onTouchStart(() => this.calculate())}></Key>
                 </div>
 
             </div>
@@ -351,12 +381,13 @@ class Key extends React.Component
         super(props);
 
         this.onClick = this.props.onClick;
+        this.onTouchStart = this.props.onTouchStart;
     }
 
     render()
     {
         return (
-            <div className='Key' onClick={() => this.onClick()}>
+            <div className='Key' onTouchStart={() => this.onTouchStart()} onClick={() => this.onClick()}>
                 {
                     this.props.isHor == true &&
                         <span className='Horizontal'>{this.props.text}</span>
