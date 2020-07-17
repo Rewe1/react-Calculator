@@ -297,7 +297,7 @@ class Calculator extends React.Component
                 <div className='Holder'>
                     <Key text={'C'}  onClick={ () => this.clearText()}></Key>
                     <Key text={'^x'}  onClick={ () => this.addChar('^')}></Key>
-                    <Key text={'2√'}  onClick={ () => this.addChar('√')}></Key>
+                    <Key text={'²√'}  onClick={ () => this.addChar('√')}></Key>
                     <Key text={'←'}  onClick={ () => this.backspace()}></Key>
                 </div>
 

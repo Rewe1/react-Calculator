@@ -1,9 +1,10 @@
+const os = require('os');
 const fs = require('fs');
 const express = require('express');
 const app = express();
 
-const host = 'localhost';
-const port = '3000';
+const host = `${os.hostname}`;
+const port = '8080';
 
 app.get('/', (req, res) =>
 {
@@ -77,5 +78,5 @@ app.get('/Calculator.js', (req, res) =>
 
 app.listen(port, host, () =>
 {
-    console.log(`Listening on ${port}:${host}`);
+    console.log(`Listening on ${host}:${port}`);
 })

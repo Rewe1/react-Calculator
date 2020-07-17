@@ -20,8 +20,8 @@ body
 
 #Carcass
 {
-    width: fit-content;
-    height: fit-content;
+    width: min-content;
+    height: min-content;
     background-color: #ccc;
     padding: 16px;
     border-radius: 3px;
@@ -87,9 +87,9 @@ body
     justify-content: center;
     align-items: center;
     width: 48px;
-    min-width: fit-content;
+    min-width: min-content;
     height: 48px;
-    min-height: fit-content;
+    min-height: min-content;
     background-color: #555;
     margin-right: 8px;
     font-size: 24px;
