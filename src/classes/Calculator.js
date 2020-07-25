@@ -14,7 +14,7 @@ class Calculator extends React.Component
         this.mobile = false,
         this.isDebug = true;
         this.regExpN = /[0-9πe.]/;
-        this.regExpO = /[+*/^]|-/;
+        this.regExpO = /[+*/^√]|-/;
     }
     
     debugLog(func)
@@ -99,6 +99,18 @@ class Calculator extends React.Component
                     numbers.splice(i +1, 1);
                     i--;
                 }
+            }
+
+            if(operators[i].match(/√/))
+            {
+                if(operators[i].match(/²/))
+                    numbers[i] = Math.sqrt(numbers[i]);
+
+                if(operators[i].match(/³/))
+                    numbers[i] = Math.cbrt(numbers[i]);
+                    
+                operators.splice(i, 1);
+                i--;
             }
 
         }
@@ -263,8 +275,22 @@ class Calculator extends React.Component
                 text += ` ${char} `;
         }
 
-        if(char == '√')
-            text += ` ^ 0.5`;
+        if(text.length == 1 && text.charAt(0) == '0')
+        {
+            if(char == '²')
+                text = `²√ `;
+
+            if(char == '³')
+                text = `³√ `;
+        }
+        else
+        {
+            if(char == '²')
+                text += ` ²√ `;
+    
+            if(char == '³')
+                text += ` ³√ `;
+        }
 
         state.text = text;
         this.setCalcState(state);
@@ -287,11 +313,14 @@ class Calculator extends React.Component
     {
         let text = this.getCalcState().text;
 
-        if(text.charAt(text.length -2).match(/[+*/^]|-/))
+        if(text.charAt(text.length -2).match(this.regExpO))
         {
             if(text.charAt(text.length -1) == ' ')
                 text = text.slice(0, -1);
 
+            if(text.charAt(text.length -1) == '√')
+                text = text.slice(0, -1);
+                
             text = text.slice(0, -1);
 
             if(text.charAt(text.length -1) == ' ')
@@ -357,8 +386,8 @@ class Calculator extends React.Component
 
                 <div className='Holder'>
                     <Key text={'C'}  onClick={() => this.onClick(() => this.clearText())}  onTouchStart={() => this.onTouchStart(() => this.clearText())}></Key>
-                    <Key text={'^x'} onClick={() => this.onClick(() => this.addChar('^'))} onTouchStart={() => this.onTouchStart(() => this.addChar('^'))}></Key>
-                    <Key text={'²√'} onClick={() => this.onClick(() => this.addChar('√'))} onTouchStart={() => this.onTouchStart(() => this.addChar('√'))}></Key>
+                    <Key text={'²√'} onClick={() => this.onClick(() => this.addChar('²'))} onTouchStart={() => this.onTouchStart(() => this.addChar('√'))}></Key>
+                    <Key text={'³√'} onClick={() => this.onClick(() => this.addChar('³'))} onTouchStart={() => this.onTouchStart(() => this.addChar('√'))}></Key>
                     <Key text={'←'}  onClick={() => this.onClick(() => this.backspace())}  onTouchStart={() => this.onTouchStart(() => this.backspace())}></Key>
                 </div>
 
@@ -373,7 +402,7 @@ class Calculator extends React.Component
                     <Key text={'7'} onClick={() => this.onClick(() => this.addChar('7'))} onTouchStart={() => this.onTouchStart(() => this.addChar('7'))}></Key>
                     <Key text={'8'} onClick={() => this.onClick(() => this.addChar('8'))} onTouchStart={() => this.onTouchStart(() => this.addChar('8'))}></Key>
                     <Key text={'9'} onClick={() => this.onClick(() => this.addChar('9'))} onTouchStart={() => this.onTouchStart(() => this.addChar('9'))}></Key>
-                    <Key text={'|x|'}   onClick={() => {}} onTouchStart={() => {}}></Key>
+                    <Key text={'^x'} onClick={() => this.onClick(() => this.addChar('^'))} onTouchStart={() => this.onTouchStart(() => this.addChar('^'))}></Key>
                 </div>
 
                 <div className='Holder'>
