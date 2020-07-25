@@ -13,6 +13,8 @@ class Calculator extends React.Component
         }
         this.mobile = false,
         this.isDebug = true;
+        this.regExpN = /[0-9πe.]/;
+        this.regExpO = /[+*/^]|-/;
     }
     
     debugLog(func)
@@ -39,8 +41,6 @@ class Calculator extends React.Component
         let rawText = this.getCalcState().text;
         let numbers = [];
         let operators = [];
-        let regExpN = /[0-9.]/;
-        let regExpO = /[+*/^]|-/;
         this.debugLog(() => console.log('parseString'));
         this.debugLog(() => console.log('rawText: ', rawText));
 
@@ -48,12 +48,18 @@ class Calculator extends React.Component
         
         for(let i = 0; i < rawText.length; i++)
         {
-            if(rawText[i].match(regExpN))
+            if(rawText[i].match(this.regExpN))
             {
-                numbers.push(Number(rawText[i]));
+                if(!rawText[i].match(/[πe]/))
+                    numbers.push(Number(rawText[i]));
+                else
+                    if(rawText[i] == 'π')
+                        numbers.push(Math.PI);
+                    else if(rawText[i] == 'e')
+                        numbers.push(Math.E);
             }
             
-            if(rawText[i].match(regExpO) && !rawText[i].match(regExpN))
+            if(rawText[i].match(this.regExpO) && !rawText[i].match(this.regExpN))
             {
                 operators.push(rawText[i]);
             }
@@ -196,36 +202,42 @@ class Calculator extends React.Component
     {
         if(char.length > 1)
             return;
-            
+
+        if(char == 'p')
+            char = 'π';
+
         let state = this.getCalcState();
         let text = state.text;
 
         if(text.length >= 15)
             return;
 
-        let regExpN = /[0123456789.]/;
-        let regExpO = /[+*/^]|-/;
-
         this.debugLog(() => console.log('addChar'));
         this.debugLog(() => console.log(char));
-        this.debugLog(() => console.log(char.match(regExpN)));
-        this.debugLog(() => console.log(char.match(regExpO)));
+        this.debugLog(() => console.log(char.match(this.regExpN)));
+        this.debugLog(() => console.log(char.match(this.regExpO)));
         this.debugLog(() => console.log(''));
 
-        if(char.match(regExpN))
+        if(char.match(this.regExpN))
         {
             if(text.length == 1 && text.charAt(0) == '0' && char != '.')
-                text = char;
+            {
+                if(!char.match(/[πe.]/))
+                    text = char;
+                else
+                    text = ` ${char} `;
+            }
             else
             {
-                if(char != '.')
+                if(!char.match(/[πe.]/))
                     text += char;
-                    
-                if(char == '.' && text.charAt(text.length -1) != '.')
+                else if(char == '.' && text.charAt(text.length -1) != '.')
                     text += char;
+                else
+                    text += ` ${char} `;
             }
         }
-        else if(char.match(regExpO))
+        else if(char.match(this.regExpO))
         {
             if(text.charAt(text.length -1).match(/[+*/^\.]|-/) || 
               (text.charAt(text.length -1) == ' ' && text.charAt(text.length -2).match(/[+*/^\.]|-/)))
@@ -361,21 +373,21 @@ class Calculator extends React.Component
                     <Key text={'7'} onClick={() => this.onClick(() => this.addChar('7'))} onTouchStart={() => this.onTouchStart(() => this.addChar('7'))}></Key>
                     <Key text={'8'} onClick={() => this.onClick(() => this.addChar('8'))} onTouchStart={() => this.onTouchStart(() => this.addChar('8'))}></Key>
                     <Key text={'9'} onClick={() => this.onClick(() => this.addChar('9'))} onTouchStart={() => this.onTouchStart(() => this.addChar('9'))}></Key>
-                    <Key text={''}  onClick={() => {}} onTouchStart={() => {}}></Key>
+                    <Key text={'|x|'}   onClick={() => {}} onTouchStart={() => {}}></Key>
                 </div>
 
                 <div className='Holder'>
                     <Key text={'4'}  onClick={() => this.onClick(() => this.addChar('4'))} onTouchStart={() => this.onTouchStart(() => this.addChar('4'))}></Key>
                     <Key text={'5'}  onClick={() => this.onClick(() => this.addChar('5'))} onTouchStart={() => this.onTouchStart(() => this.addChar('5'))}></Key>
                     <Key text={'6'}  onClick={() => this.onClick(() => this.addChar('6'))} onTouchStart={() => this.onTouchStart(() => this.addChar('6'))}></Key>
-                    <Key text={''}   onClick={() => {}} onTouchStart={() => {}}></Key>
+                    <Key text={'π'}   onClick={() => this.onClick(() => this.addChar('π'))} onTouchStart={() => this.onClick(() => this.addChar('π'))}></Key>
                 </div>
 
                 <div className='Holder'>
                     <Key text={'1'}  onClick={() => this.onClick(() => this.addChar('1'))} onTouchStart={() => this.onTouchStart(() => this.addChar('1'))}></Key>
                     <Key text={'2'}  onClick={() => this.onClick(() => this.addChar('2'))} onTouchStart={() => this.onTouchStart(() => this.addChar('2'))}></Key>
                     <Key text={'3'}  onClick={() => this.onClick(() => this.addChar('3'))} onTouchStart={() => this.onTouchStart(() => this.addChar('3'))}></Key>
-                    <Key text={''}   onClick={() => {}} onTouchStart={() => {}}></Key>
+                    <Key text={'e'}  onClick={() => this.onClick(() => this.addChar('e'))} onTouchStart={() => this.onClick(() => this.addChar('e'))}></Key>
                 </div>
 
                 <div className='Holder'>
