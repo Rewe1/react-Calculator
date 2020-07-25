@@ -12,7 +12,7 @@ class Calculator extends React.Component
             'text': '0',
         }
         this.mobile = false,
-        this.isDebug = false;
+        this.isDebug = true;
     }
     
     debugLog(func)
@@ -194,14 +194,23 @@ class Calculator extends React.Component
 
     addChar(char)
     {
+        if(char.length > 1)
+            return;
+            
         let state = this.getCalcState();
         let text = state.text;
 
         if(text.length >= 15)
             return;
 
-        let regExpN = /[0-9.]/;
+        let regExpN = /[0123456789.]/;
         let regExpO = /[+*/^]|-/;
+
+        this.debugLog(() => console.log('addChar'));
+        this.debugLog(() => console.log(char));
+        this.debugLog(() => console.log(char.match(regExpN)));
+        this.debugLog(() => console.log(char.match(regExpO)));
+        this.debugLog(() => console.log(''));
 
         if(char.match(regExpN))
         {
