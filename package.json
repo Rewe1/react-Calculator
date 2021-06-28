@@ -1,18 +1,38 @@
+
+
 {
-    "scripts": {
-        "start": "npm run build && nodemon expressApp.js -e js,html,css,json",
-        "build": "babel src -d lib && browserify lib/index.js -o build/bundle.js"
-    },
-    "dependencies": {
-        "express": "^4.17.1",
-        "nodemon": "^2.0.4"
-    },
-    "devDependencies": {
-        "react": "^16.13.1",
-        "react-dom": "^16.13.1",
-        "@babel/cli": "^7.14.5",
-        "@babel/core": "^7.10.5",
-        "@babel/preset-react": "^7.10.4",
-        "browserify": "^16.5.1"
-    }
+  "name": "reactcalculator",
+  "version": "1.0.1",
+  "description": "A simple react calculator",
+  "main": "expressApp.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "nodemon expressApp.js -e js,html,css,json",
+    "start-dev": "npm run build && nodemon expressApp.js -e js,html,css,json",
+    "build": "babel src -d lib && browserify lib/index.js -o build/bundle.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  },
+  "devDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-react": "^7.10.4",
+    "browserify": "^16.5.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rewe1/react-Calculator.git"
+  },
+  "author": "Kewyn Ryan Vieira de Latorre",
+  "license": "APACHE LICENSE, VERSION 2.0",
+  "bugs": {
+    "url": "https://github.com/Rewe1/react-Calculator/issues"
+  },
+  "homepage": "https://github.com/Rewe1/react-Calculator#readme"
 }

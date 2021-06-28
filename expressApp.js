@@ -3,7 +3,7 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 
-const host = `${os.hostname}`;
+const host = require('os').networkInterfaces().Ethernet[1].address
 const port = '8080';
 
 app.get('/', (req, res) =>
@@ -47,5 +47,5 @@ app.get('/bundle.js', (req, res) =>
 
 app.listen(port, host, () =>
 {
-    console.log(`Listening on ${host}:${port}`);
+    console.log(`Listening on http://${host}:${port}`);
 })
